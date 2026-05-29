@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm install",
+  "devCommand": "npm start",
+  "outputDirectory": ".",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

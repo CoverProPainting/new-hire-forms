@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Pro Painting - New Hire Forms</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { background: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+    h1 { color: #1e3f5a; margin-bottom: 10px; }
+    .subtitle { color: #666; font-size: 14px; }
+    .logout-btn { position: absolute; top: 20px; right: 20px; padding: 8px 16px; background: #999; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; text-decoration: none; display: inline-block; }
+    .logout-btn:hover { background: #666; }
+    .federal-forms { background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+    .federal-forms h2 { color: #856404; font-size: 16px; margin-bottom: 15px; }
+    .federal-forms p { color: #856404; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
+    .form-links { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-link { background: white; padding: 15px; border-radius: 5px; border: 1px solid #ffc107; text-decoration: none; color: #856404; font-weight: bold; text-align: center; transition: all 0.3s; display: block; }
+    .form-link:hover { background: #fffbf0; border-color: #ff9800; }
+    .forms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .form-card { background: white; border-radius: 10px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; border-top: 4px solid #2c5aa0; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+    .form-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+    .form-card h3 { color: #1e3f5a; margin-bottom: 10px; font-size: 16px; }
+    .form-card p { color: #666; font-size: 13px; line-height: 1.5; margin-bottom: 15px; }
+    .form-card .btn { background: #2c5aa0; color: white; padding: 10px 20px; border-radius: 5px; text-align: center; font-size: 13px; font-weight: bold; display: inline-block; transition: background 0.3s; }
+    .form-card:hover .btn { background: #1e3f5a; }
+    .section-title { color: #1e3f5a; font-size: 18px; margin: 30px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #2c5aa0; }
+    .info-box { background: #f0f4ff; border-left: 4px solid #2c5aa0; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px; color: #333; }
+    @media (max-width: 600px) { .form-links { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a href="/logout" class="logout-btn">Logout</a>
+  <div class="container">
+    <header>
+      <h1>Cover Pro Painting</h1>
+      <p class="subtitle">New Hire Forms - Complete the following forms for onboarding</p>
+    </header>
+
+    <div class="federal-forms">
+      <h2>📋 Required Federal Forms</h2>
+      <p>Download and complete these government forms before starting the company forms below:</p>
+      <div class="form-links">
+        <a href="https://www.irs.gov/pub/irs-pdf/fw4.pdf" target="_blank" class="form-link">📄 W-4 Form</a>
+        <a href="https://www.uscis.gov/i-9" target="_blank" class="form-link">📄 I-9 Form</a>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Welcome!</strong> Please complete all forms below. Each form will be submitted directly and saved for your records.
+    </div>
+
+    <h2 class="section-title">1. Employee Information</h2>
+    <div class="forms-grid">
+      <a href="/form/employee-information" class="form-card">
+        <h3>Employee Information Form</h3>
+        <p>Personal details, contact information, and emergency contact sign-off</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+      <a href="/form/emergency-contact" class="form-card">
+        <h3>Emergency Contact Information</h3>
+        <p>Primary and secondary emergency contact information</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">2. Company Agreements</h2>
+    <div class="forms-grid">
+      <a href="/form/job-description" class="form-card">
+        <h3>Job Description Acknowledgment</h3>
+        <p>Confirm you've received and understand your job description</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+      <a href="/form/employment-policies" class="form-card">
+        <h3>Employment Policies Acknowledgment</h3>
+        <p>Review and acknowledge company employment policies</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+      <a href="/form/equipment" class="form-card">
+        <h3>Equipment & Asset Acknowledgment</h3>
+        <p>Document company equipment issued to you</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">3. Administrative</h2>
+    <div class="forms-grid">
+      <a href="/form/new-hire-checklist" class="form-card">
+        <h3>New Hire Checklist</h3>
+        <p>Supervisor checklist - completed after onboarding</p>
+        <span class="btn">Fill Out Form →</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

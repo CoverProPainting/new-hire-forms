@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Information Form - Cover Pro Painting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    .form-container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .form-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2c5aa0; padding-bottom: 20px; }
+    .form-header h1 { color: #1e3f5a; margin-bottom: 10px; font-size: 22px; }
+    .form-header p { color: #666; font-size: 13px; }
+    .form-section { margin-bottom: 25px; }
+    .form-section h2 { color: #2c5aa0; font-size: 14px; font-weight: bold; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; }
+    label { font-size: 12px; font-weight: bold; color: #333; margin-bottom: 5px; }
+    input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+    input:focus { outline: none; border-color: #2c5aa0; box-shadow: 0 0 5px rgba(44,90,160,0.2); }
+    .back-link { display: inline-block; margin-bottom: 20px; color: #2c5aa0; text-decoration: none; font-size: 13px; }
+    .back-link:hover { text-decoration: underline; }
+    .submit-section { margin-top: 30px; text-align: center; }
+    button { background: #2c5aa0; color: white; padding: 12px 40px; border: none; border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1e3f5a; }
+    .signature-section { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; }
+    .signature-fields { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <a href="/forms" class="back-link">← Back to Forms</a>
+    <div class="form-header">
+      <h1>EMPLOYEE INFORMATION FORM</h1>
+      <p>Please complete all sections. This information is confidential and used for employment records only.</p>
+    </div>
+    <form method="POST" action="/form/employee-information">
+      <div class="form-section">
+        <h2>Personal Information</h2>
+        <div class="form-row">
+          <div class="form-group"><label for="firstName">Legal First Name *</label><input type="text" id="firstName" name="firstName" required></div>
+          <div class="form-group"><label for="middleName">Middle Name</label><input type="text" id="middleName" name="middleName"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="lastName">Last Name *</label><input type="text" id="lastName" name="lastName" required></div>
+          <div class="form-group"><label for="preferredName">Preferred Name</label><input type="text" id="preferredName" name="preferredName"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="dateOfBirth">Date of Birth</label><input type="date" id="dateOfBirth" name="dateOfBirth"></div>
+          <div class="form-group"><label for="ssn">Social Security Number *</label><input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <h2>Contact Information</h2>
+        <div class="form-row full">
+          <div class="form-group"><label for="streetAddress">Street Address *</label><input type="text" id="streetAddress" name="streetAddress" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="city">City *</label><input type="text" id="city" name="city" required></div>
+          <div class="form-group"><label for="state">State *</label><input type="text" id="state" name="state" placeholder="WA" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="zip">ZIP Code *</label><input type="text" id="zip" name="zip" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="primaryPhone">Primary Phone *</label><input type="tel" id="primaryPhone" name="primaryPhone" required></div>
+          <div class="form-group"><label for="secondaryPhone">Secondary Phone</label><input type="tel" id="secondaryPhone" name="secondaryPhone"></div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group"><label for="email">Personal Email *</label><input type="email" id="email" name="email" required></div>
+        </div>
+      </div>
+      <div class="signature-section">
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">I certify that the information provided above is true and accurate to the best of my knowledge.</p>
+        <div class="signature-fields">
+          <div class="form-group"><label for="signature">Your Signature (type your full name) *</label><input type="text" id="signature" name="signature" placeholder="Full Name" required></div>
+          <div class="form-group"><label>Date</label><input type="text" value="<%= new Date().toLocaleDateString() %>" disabled style="background: #f9f9f9;"></div>
+        </div>
+      </div>
+      <div class="submit-section">
+        <button type="submit">Submit Form</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

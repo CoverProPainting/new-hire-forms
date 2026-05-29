@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipment & Asset - Cover Pro Painting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    .form-container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .form-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2c5aa0; padding-bottom: 20px; }
+    .form-header h1 { color: #1e3f5a; margin-bottom: 10px; font-size: 22px; }
+    .form-header p { color: #666; font-size: 13px; }
+    .equipment-item { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #2c5aa0; }
+    .equipment-item label { font-size: 13px; font-weight: bold; color: #1e3f5a; margin-bottom: 10px; display: block; }
+    .item-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
+    input { padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; }
+    input:focus { outline: none; border-color: #2c5aa0; }
+    .back-link { display: inline-block; margin-bottom: 20px; color: #2c5aa0; text-decoration: none; font-size: 13px; }
+    .submit-section { margin-top: 30px; text-align: center; }
+    button { background: #2c5aa0; color: white; padding: 12px 40px; border: none; border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1e3f5a; }
+    .signature-section { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; }
+    .signature-fields { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <a href="/forms" class="back-link">← Back to Forms</a>
+    <div class="form-header">
+      <h1>EQUIPMENT & ASSET ACKNOWLEDGMENT</h1>
+      <p>I acknowledge receipt of the following company property and agree to return all items in good condition.</p>
+    </div>
+    <form method="POST" action="/form/equipment">
+      <div style="margin-bottom: 25px;">
+        <% const items = ['Company Vehicle', 'Vehicle Keys', 'iPad/Tablet', 'Company Credit Card', 'Office Keys', 'Phone/Phone Number']; %>
+        <% items.forEach((item, i) => { %>
+          <div class="equipment-item">
+            <label>☐ <%= item %></label>
+            <div class="item-row">
+              <input type="text" name="eq<%= i+1 %>Desc" placeholder="Description/Serial #">
+              <input type="text" name="eq<%= i+1 %>Date" placeholder="Date Issued">
+              <input type="text" name="eq<%= i+1 %>Initial" placeholder="Initial" maxlength="3">
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <div style="margin-bottom: 25px; padding: 15px; background: #fafafa; border-radius: 5px;">
+        <p style="font-size: 12px; color: #333; line-height: 1.6;">
+          <strong>I understand that:</strong><br>
+          • I am responsible for all issued equipment and will maintain it in good working condition<br>
+          • I will immediately report any loss, theft, or damage to company property<br>
+          • I will return all company property immediately upon termination or upon request
+        </p>
+      </div>
+      <div class="signature-section">
+        <div class="signature-fields">
+          <div class="form-group"><label>Your Signature (type your full name) *</label><input type="text" name="signature" placeholder="Full Name" required></div>
+          <div class="form-group"><label>Date</label><input type="text" value="<%= new Date().toLocaleDateString() %>" disabled style="background: #f9f9f9;"></div>
+        </div>
+      </div>
+      <div class="submit-section"><button type="submit">Submit Form</button></div>
+    </form>
+  </div>
+</body>
+</html>

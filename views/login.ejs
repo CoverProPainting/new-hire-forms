@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Pro Painting - New Hire Forms</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #2c5aa0 0%, #1e3f5a 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+    .login-container { background: white; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); padding: 40px; width: 100%; max-width: 400px; }
+    .logo-container { text-align: center; margin-bottom: 30px; }
+    .logo-container h1 { font-size: 24px; color: #1e3f5a; margin-bottom: 10px; }
+    .logo-container p { color: #666; font-size: 14px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; color: #333; font-weight: bold; }
+    input[type="password"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; }
+    input[type="password"]:focus { outline: none; border-color: #2c5aa0; }
+    button { width: 100%; padding: 12px; background: #2c5aa0; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1e3f5a; }
+    .error { background: #fee; color: #c33; padding: 12px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #c33; }
+    .info { background: #f0f4ff; color: #333; padding: 15px; border-radius: 5px; margin-top: 20px; font-size: 14px; border-left: 4px solid #2c5aa0; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-container">
+      <h1>Cover Pro Painting</h1>
+      <p>New Hire Forms</p>
+    </div>
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label for="password">Access Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required autofocus>
+      </div>
+      <button type="submit">Access Forms</button>
+    </form>
+    <div class="info">
+      <strong>New to this form?</strong><br>
+      Contact Cover Pro Painting for your access password.
+    </div>
+  </div>
+</body>
+</html>
