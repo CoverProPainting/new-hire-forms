@@ -212,50 +212,53 @@ function generateEmploymentPoliciesPDF(data) {
   });
 }
 
-function generateNewHireChecklistPDF(data) {
+function generateDirectDepositPDF(data) {
   const doc = new PDFDocument({ margin: 40 });
   let buffers = [];
   doc.on('data', buffers.push.bind(buffers));
 
-  doc.fontSize(20).font('Helvetica-Bold').text('NEW HIRE CHECKLIST', { align: 'center' });
-  doc.fontSize(10).font('Helvetica').text('For Office Use Only', { align: 'center' });
-  doc.moveDown();
-  doc.fontSize(10).font('Helvetica-Bold').text(`Employee Name: ${data.employeeName}`);
-  doc.fontSize(10).font('Helvetica-Bold').text(`Position: ${data.position}`);
-  doc.fontSize(10).font('Helvetica-Bold').text(`Start Date: ${data.startDate}`);
+  doc.fontSize(20).font('Helvetica-Bold').text('DIRECT DEPOSIT AUTHORIZATION', { align: 'center' });
+  doc.moveDown(0.5);
+  doc.fontSize(10).font('Helvetica').text('Authorization to deposit paycheck directly to bank account.', { align: 'center' });
   doc.moveDown();
 
-  doc.fontSize(11).font('Helvetica-Bold').text('Before First Day');
-  doc.moveDown(0.2);
-
-  const preTasks = [
-    'Offer Letter Accepted: Wage Agreement',
-    'Background Check (if required)',
-    'W-4',
-    'I-9',
-    'Direct Deposit Form',
-    'Work Email Created'
+  doc.fontSize(12).font('Helvetica-Bold').text('Account Holder Information');
+  doc.moveDown(0.3);
+  
+  const holderFields = [
+    ['First Name:', data.firstName],
+    ['Last Name:', data.lastName]
   ];
 
-  preTasks.forEach(task => {
-    doc.fontSize(10).text(`☐ ${task}`);
+  holderFields.forEach(([label, value]) => {
+    doc.fontSize(10).font('Helvetica-Bold').text(label);
+    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
+    doc.moveDown(0.2);
   });
 
   doc.moveDown();
-  doc.fontSize(11).font('Helvetica-Bold').text('First Day - New Hire Packet Forms');
-  doc.moveDown(0.2);
+  doc.fontSize(12).font('Helvetica-Bold').text('Bank Account Information');
+  doc.moveDown(0.3);
 
-  const formTasks = [
-    'Employee Information Form',
-    'Emergency Contact Form',
-    'Equipment & Asset Acknowledgment',
-    'Job Description Acknowledgment',
-    'Employment Policies Acknowledgment'
+  const bankFields = [
+    ['Bank Name:', data.bankName],
+    ['Account Type:', data.accountType],
+    ['Routing Number:', data.routingNumber],
+    ['Account Number:', data.accountNumber]
   ];
 
-  formTasks.forEach(task => {
-    doc.fontSize(10).text(`☐ ${task}`);
+  bankFields.forEach(([label, value]) => {
+    doc.fontSize(10).font('Helvetica-Bold').text(label);
+    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
+    doc.moveDown(0.2);
   });
+
+  doc.moveDown();
+  doc.fontSize(10).text(data.signature || '___________________________________');
+  doc.fontSize(9).text('Employee Signature');
+  doc.moveDown(0.2);
+  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
+  doc.fontSize(9).text('Date');
 
   doc.end();
   return new Promise((resolve) => {
@@ -271,5 +274,5 @@ module.exports = {
   generateEquipmentPDF,
   generateJobDescriptionPDF,
   generateEmploymentPoliciesPDF,
-  generateNewHireChecklistPDF
+  generateDirectDepositPDF
 };
