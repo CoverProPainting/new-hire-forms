@@ -7,7 +7,7 @@ const {
   generateEquipmentPDF,
   generateJobDescriptionPDF,
   generateEmploymentPoliciesPDF,
-  generateNewHireChecklistPDF
+  generateDirectDepositPDF
 } = require('../utils/pdf');
 
 router.get('/employee-information', (req, res) => {
@@ -84,14 +84,17 @@ router.get('/new-hire-checklist', (req, res) => {
   res.render('forms/new-hire-checklist');
 });
 
-router.post('/new-hire-checklist', async (req, res) => {
+router.get('/direct-deposit', (req, res) => {
+  res.render('forms/direct-deposit');
+});
+
+router.post('/direct-deposit', async (req, res) => {
   try {
-    const pdfBuffer = await generateNewHireChecklistPDF(req.body);
-    await sendFormEmail('NEW HIRE CHECKLIST', req.body, pdfBuffer);
-    res.render('forms/success', { formName: 'New Hire Checklist' });
+    const pdfBuffer = await generateDirectDepositPDF(req.body);
+    await sendFormEmail('DIRECT DEPOSIT AUTHORIZATION', req.body, pdfBuffer);
+    res.render('forms/success', { formName: 'Direct Deposit Authorization' });
   } catch (error) {
     res.render('forms/error', { error: error.message });
   }
 });
-
 module.exports = router;
