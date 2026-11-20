@@ -1,278 +1,79 @@
-const PDFDocument = require('pdfkit');
-
-function generateEmployeeInfoPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('EMPLOYEE INFORMATION FORM', { align: 'center' });
-  doc.moveDown(0.5);
-  doc.fontSize(10).font('Helvetica').text('Please complete all sections. This information is confidential and used for employment records only.', { align: 'center' });
-  doc.moveDown();
-
-  doc.fontSize(12).font('Helvetica-Bold').text('Personal Information');
-  doc.moveDown(0.3);
-  
-  const fields = [
-    ['Legal First Name:', data.firstName],
-    ['Middle Name:', data.middleName],
-    ['Last Name:', data.lastName],
-    ['Preferred Name:', data.preferredName],
-    ['Date of Birth:', data.dateOfBirth],
-    ['Social Security Number:', data.ssn]
-  ];
-
-  fields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(12).font('Helvetica-Bold').text('Contact Information');
-  doc.moveDown(0.3);
-
-  const contactFields = [
-    ['Street Address:', data.streetAddress],
-    ['City:', data.city],
-    ['State:', data.state],
-    ['ZIP Code:', data.zip],
-    ['Primary Phone:', data.primaryPhone],
-    ['Secondary Phone:', data.secondaryPhone],
-    ['Personal Email:', data.email]
-  ];
-
-  contactFields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(10).font('Helvetica').text('I certify that the information provided above is true and accurate to the best of my knowledge.');
-  doc.moveDown(0.5);
-  doc.fontSize(9).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-  doc.moveDown(0.2);
-  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
-  doc.fontSize(9).text('Date');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-function generateEmergencyContactPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('EMERGENCY CONTACT INFORMATION', { align: 'center' });
-  doc.moveDown(0.5);
-  doc.fontSize(10).font('Helvetica').text('Please provide at least two emergency contacts.', { align: 'center' });
-  doc.moveDown();
-
-  doc.fontSize(12).font('Helvetica-Bold').text('Primary Emergency Contact');
-  doc.moveDown(0.3);
-
-  const primaryFields = [
-    ['Full Name:', data.primaryName],
-    ['Relationship:', data.primaryRelationship],
-    ['Primary Phone:', data.primaryPhone1],
-    ['Secondary Phone:', data.primaryPhone2],
-    ['Email:', data.primaryEmail]
-  ];
-
-  primaryFields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(12).font('Helvetica-Bold').text('Secondary Emergency Contact');
-  doc.moveDown(0.3);
-
-  const secondaryFields = [
-    ['Full Name:', data.secondaryName],
-    ['Relationship:', data.secondaryRelationship],
-    ['Primary Phone:', data.secondaryPhone1],
-    ['Secondary Phone:', data.secondaryPhone2],
-    ['Email:', data.secondaryEmail]
-  ];
-
-  secondaryFields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(10).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-  doc.moveDown(0.2);
-  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
-  doc.fontSize(9).text('Date');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-function generateEquipmentPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('EQUIPMENT & ASSET ACKNOWLEDGMENT', { align: 'center' });
-  doc.moveDown(0.5);
-  doc.fontSize(10).font('Helvetica').text('I acknowledge receipt of the following company property and agree to return all items in good condition.', { align: 'center' });
-  doc.moveDown();
-
-  const items = [
-    { name: 'Company Vehicle', desc: data.eq1Desc, date: data.eq1Date },
-    { name: 'Vehicle Keys', desc: data.eq2Desc, date: data.eq2Date },
-    { name: 'iPad/Tablet', desc: data.eq3Desc, date: data.eq3Date },
-    { name: 'Company Credit Card', desc: data.eq4Desc, date: data.eq4Date },
-    { name: 'Office Keys', desc: data.eq5Desc, date: data.eq5Date },
-    { name: 'Phone/Phone Number', desc: data.eq6Desc, date: data.eq6Date }
-  ];
-
-  items.forEach((item) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(`☐ ${item.name}`);
-    doc.fontSize(9).font('Helvetica').text(`Description: ${item.desc || '___________________________________'}`);
-    doc.fontSize(9).text(`Date Issued: ${item.date || '_______________'}`);
-    doc.moveDown(0.3);
-  });
-
-  doc.moveDown();
-  doc.fontSize(10).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-function generateJobDescriptionPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('JOB DESCRIPTION ACKNOWLEDGMENT', { align: 'center' });
-  doc.moveDown();
-  doc.fontSize(10).font('Helvetica-Bold').text('Position:');
-  doc.fontSize(10).font('Helvetica').text(data.position || '___________________________________');
-  doc.moveDown();
-  doc.fontSize(10).text('I acknowledge that I have received, read, and understand my job description. I understand that my employment is at-will.');
-  doc.moveDown();
-  doc.fontSize(10).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-  doc.moveDown(0.2);
-  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
-  doc.fontSize(9).text('Date');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-function generateEmploymentPoliciesPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('EMPLOYMENT POLICIES ACKNOWLEDGMENT', { align: 'center' });
-  doc.moveDown();
-  doc.fontSize(10).text('I acknowledge that I have read and understand the employment policies outlined, including: 90-day mutual review period, at-will employment, wage compensation, Washington State paid sick leave, building access and property responsibility, and professional conduct expectations. I agree to comply with all company policies and procedures.');
-  doc.moveDown();
-  doc.fontSize(10).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-  doc.moveDown(0.2);
-  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
-  doc.fontSize(9).text('Date');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-function generateDirectDepositPDF(data) {
-  const doc = new PDFDocument({ margin: 40 });
-  let buffers = [];
-  doc.on('data', buffers.push.bind(buffers));
-
-  doc.fontSize(20).font('Helvetica-Bold').text('DIRECT DEPOSIT AUTHORIZATION', { align: 'center' });
-  doc.moveDown(0.5);
-  doc.fontSize(10).font('Helvetica').text('Authorization to deposit paycheck directly to bank account.', { align: 'center' });
-  doc.moveDown();
-
-  doc.fontSize(12).font('Helvetica-Bold').text('Account Holder Information');
-  doc.moveDown(0.3);
-  
-  const holderFields = [
-    ['First Name:', data.firstName],
-    ['Last Name:', data.lastName]
-  ];
-
-  holderFields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(12).font('Helvetica-Bold').text('Bank Account Information');
-  doc.moveDown(0.3);
-
-  const bankFields = [
-    ['Bank Name:', data.bankName],
-    ['Account Type:', data.accountType],
-    ['Routing Number:', data.routingNumber],
-    ['Account Number:', data.accountNumber]
-  ];
-
-  bankFields.forEach(([label, value]) => {
-    doc.fontSize(10).font('Helvetica-Bold').text(label);
-    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
-    doc.moveDown(0.2);
-  });
-
-  doc.moveDown();
-  doc.fontSize(10).text(data.signature || '___________________________________');
-  doc.fontSize(9).text('Employee Signature');
-  doc.moveDown(0.2);
-  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
-  doc.fontSize(9).text('Date');
-
-  doc.end();
-  return new Promise((resolve) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
-    });
-  });
-}
-
-module.exports = {
-  generateEmployeeInfoPDF,
-  generateEmergencyContactPDF,
-  generateEquipmentPDF,
-  generateJobDescriptionPDF,
-  generateEmploymentPoliciesPDF,
-  generateDirectDepositPDF
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employment Policies - Cover Pro Painting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    .form-container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .form-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2c5aa0; padding-bottom: 20px; }
+    .form-header h1 { color: #1e3f5a; margin-bottom: 10px; font-size: 22px; }
+    .policy-section { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px; border-left: 4px solid #2c5aa0; }
+    .policy-section h3 { color: #1e3f5a; font-size: 13px; margin-bottom: 8px; font-weight: bold; }
+    .policy-section p { font-size: 12px; color: #333; line-height: 1.5; }
+    .back-link { display: inline-block; margin-bottom: 20px; color: #2c5aa0; text-decoration: none; font-size: 13px; }
+    .signature-section { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; }
+    .signature-fields { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; }
+    label { font-size: 12px; font-weight: bold; color: #333; margin-bottom: 5px; }
+    input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+    input:focus { outline: none; border-color: #2c5aa0; }
+    .submit-section { margin-top: 30px; text-align: center; }
+    button { background: #2c5aa0; color: white; padding: 12px 40px; border: none; border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1e3f5a; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <a href="/forms" class="back-link">← Back to Forms</a>
+    <div class="form-header">
+      <h1>EMPLOYMENT POLICIES ACKNOWLEDGMENT</h1>
+    </div>
+    <form method="POST" action="/form/employment-policies">
+      <div class="policy-section">
+        <h3>90-Day Mutual Review Period</h3>
+        <p>Your first 90 days with Cover Pro Painting is designed as a mutual evaluation period. At the end of 90 days, we will schedule a review meeting to discuss your experience, performance, and whether we are both satisfied with the working relationship.</p>
+      </div>
+      <div class="policy-section">
+        <h3>At-Will Employment</h3>
+        <p>Your employment with Cover Pro Painting is "at-will." This means that either you or the company may terminate the employment relationship at any time, with or without cause, and with or without notice.</p>
+      </div>
+      <div class="policy-section">
+        <h3>Wages and Compensation</h3>
+        <p>Wages vary based on position and experience. Your specific compensation details are outlined in your signed Employment Offer Letter and Wage Agreement.</p>
+      </div>
+      <div class="policy-section">
+        <h3>Washington State Paid Sick Leave</h3>
+        <p>• Accrual: You will accrue at least 1 hour of paid sick leave for every 40 hours worked<br>• Usage: You may begin using accrued sick leave on your 90th calendar day of employment<br>• Carryover: At least 40 hours of unused sick leave will carry over to the following year</p>
+      </div>
+      <div class="policy-section">
+        <h3>Building Access & Property Responsibility</h3>
+        <p>Cover Pro Painting may issue key fobs, office keys, and parking passes to employees as needed for building access and business operations. Employees are expected to safeguard all issued access items and report any lost, stolen, or damaged items to management promptly.</p>
+        <ul style="margin-left: 20px; font-size: 12px; color: #333; line-height: 1.5;">
+          <li style="margin-bottom: 8px;"><strong>Reporting &amp; One-Time Grace:</strong> If a key fob, office key, or parking pass is lost, stolen, or damaged, notify management right away. Cover Pro Painting may grant a one-time courtesy exception for a first-time accidental loss or damage, provided the employee reports it promptly and follows company reporting procedures.</li>
+          <li style="margin-bottom: 8px;"><strong>Repeated Loss or Damage:</strong> Repeat incidents of lost, stolen, or damaged access items may result in corrective action, up to and including termination, and may affect continued access privileges. Payroll deductions for lost or damaged items will only be made where permitted by Washington law (such as documented dishonest or willful conduct) and will never reduce an employee's pay below applicable minimum wage.</li>
+          <li style="margin-bottom: 8px;"><strong>Return Upon Separation:</strong> All key fobs, office keys, and parking passes remain the property of Cover Pro Painting or the applicable property landlord and must be returned on or before the employee's last day of work. Final wages will be paid on or before the next regular payday as required by Washington law.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h3>Professional Conduct Expectations</h3>
+        <p>Employees are expected to conduct themselves professionally with customers, subcontractors, coworkers, and vendors. This includes treating others with respect, arriving on time and prepared for work, following company safety procedures, maintaining a professional appearance on job sites, and representing Cover Pro Painting honestly and courteously. Harassment, discrimination, and behavior that reflects poorly on the company are not tolerated. Violations may result in corrective action, up to and including termination.</p>
+      </div>
+      <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #ffc107;">
+        <p style="font-size: 12px; color: #333; line-height: 1.6;">
+          <strong>ACKNOWLEDGMENT:</strong> I acknowledge that I have read and understand the employment policies outlined above. I agree to comply with all company policies and procedures.
+        </p>
+      </div>
+      <div class="signature-section">
+        <div class="signature-fields">
+          <div class="form-group"><label>Your Signature (type your full name) *</label><input type="text" name="signature" placeholder="Full Name" required></div>
+          <div class="form-group"><label>Date</label><input type="text" value="<%= new Date().toLocaleDateString() %>" disabled style="background: #f9f9f9;"></div>
+        </div>
+      </div>
+      <div class="submit-section"><button type="submit">Submit Form</button></div>
+    </form>
+  </div>
+</body>
+</html>
