@@ -196,7 +196,7 @@ function generateEmploymentPoliciesPDF(data) {
 
   doc.fontSize(20).font('Helvetica-Bold').text('EMPLOYMENT POLICIES ACKNOWLEDGMENT', { align: 'center' });
   doc.moveDown();
-  doc.fontSize(10).text('I acknowledge that I have read and understand the employment policies outlined, including: 90-day mutual review period, at-will employment, wage compensation, Washington State paid sick leave, and professional conduct expectations. I agree to comply with all company policies and procedures.');
+  doc.fontSize(10).text('I acknowledge that I have read and understand the employment policies outlined, including: 90-day mutual review period, at-will employment, wage compensation, Washington State paid sick leave, building access and property responsibility, and professional conduct expectations. I agree to comply with all company policies and procedures.');
   doc.moveDown();
   doc.fontSize(10).text(data.signature || '___________________________________');
   doc.fontSize(9).text('Employee Signature');
