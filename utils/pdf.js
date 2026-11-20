@@ -12,7 +12,7 @@ function generateEmployeeInfoPDF(data) {
 
   doc.fontSize(12).font('Helvetica-Bold').text('Personal Information');
   doc.moveDown(0.3);
-  
+
   const fields = [
     ['Legal First Name:', data.firstName],
     ['Middle Name:', data.middleName],
@@ -224,7 +224,7 @@ function generateDirectDepositPDF(data) {
 
   doc.fontSize(12).font('Helvetica-Bold').text('Account Holder Information');
   doc.moveDown(0.3);
-  
+
   const holderFields = [
     ['First Name:', data.firstName],
     ['Last Name:', data.lastName]
@@ -242,3 +242,37 @@ function generateDirectDepositPDF(data) {
 
   const bankFields = [
     ['Bank Name:', data.bankName],
+    ['Account Type:', data.accountType],
+    ['Routing Number:', data.routingNumber],
+    ['Account Number:', data.accountNumber]
+  ];
+
+  bankFields.forEach(([label, value]) => {
+    doc.fontSize(10).font('Helvetica-Bold').text(label);
+    doc.fontSize(10).font('Helvetica').text(value || '___________________________________');
+    doc.moveDown(0.2);
+  });
+
+  doc.moveDown();
+  doc.fontSize(10).text(data.signature || '___________________________________');
+  doc.fontSize(9).text('Employee Signature');
+  doc.moveDown(0.2);
+  doc.fontSize(9).text(new Date().toLocaleDateString() || '_______________');
+  doc.fontSize(9).text('Date');
+
+  doc.end();
+  return new Promise((resolve) => {
+    doc.on('end', () => {
+      resolve(Buffer.concat(buffers));
+    });
+  });
+}
+
+module.exports = {
+  generateEmployeeInfoPDF,
+  generateEmergencyContactPDF,
+  generateEquipmentPDF,
+  generateJobDescriptionPDF,
+  generateEmploymentPoliciesPDF,
+  generateDirectDepositPDF
+};
